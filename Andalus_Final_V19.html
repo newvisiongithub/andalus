@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>استعلام الأرباح 2025</title>
+
+<style>
+/* الأساسيات */
+body {
+    font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    background: #f0f2f1;
+    direction: rtl;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+
+/* الهيدر - الحفاظ على تصميم V10 الأصلي */
+.header {
+    background: #ffffff;
+    border-top: 6px solid #2f5f43;
+    padding: 25px 20px 30px;
+    margin: auto auto 25px;
+    max-width: 520px;
+    border-radius: 14px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.08);
+}
+
+.logo {
+    max-width: 160px;
+    display: block;
+    margin: 0 auto 12px;
+}
+
+.title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #2f5f43;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #e85c3a;
+    display: inline-block;
+}
+
+/* الإطار المضيء المتحرك حول الصندوق */
+.box-wrapper {
+    position: relative;
+    max-width: 520px;
+    margin: auto;
+    padding: 4px;
+    border-radius: 18px;
+    background: linear-gradient(45deg, #2f5f43, #e85c3a, #2f5f43, #e85c3a);
+    background-size: 400% 400%;
+    animation: moveGradient 5s ease infinite;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+@keyframes moveGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.box {
+    background: #ffffff;
+    padding: 28px 25px 30px;
+    border-radius: 14px;
+    text-align: right;
+}
+
+.field {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #444;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 16px;
+    text-align: center;
+    transition: border-color 0.3s;
+}
+
+input:focus {
+    border-color: #2f5f43;
+    outline: none;
+}
+
+button {
+    background: #2f5f43;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    width: 100%;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #1e3d2b;
+}
+
+/* النتائج وتأثيرات النجاح */
+#result {
+    margin-top: 25px;
+}
+
+.success-card {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    border-right: 5px solid #2f5f43;
+    text-align: right;
+    position: relative;
+    overflow: hidden;
+    animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.pulse-icon {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    background: #28a745;
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 22px;
+    font-size: 12px;
+    margin-left: 10px;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
+    70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
+}
+
+.glow-line {
+    height: 4px;
+    width: 100%;
+    background: linear-gradient(90deg, transparent, #28a745, transparent);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-size: 200% 100%;
+    animation: moveGlow 2s linear infinite;
+}
+
+@keyframes moveGlow {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.error {
+    color: #721c24;
+    background: #f8d7da;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #f5c6cb;
+    text-align: center;
+}
+
+.price {
+    color: #e85c3a;
+    font-weight: bold;
+    font-size: 20px;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+    <img src="logo.png" alt="Logo" class="logo">
+    <div class="title">استعلام عن قيمة الأرباح لعام 2025</div>
+</div>
+
+<div class="box-wrapper">
+    <div class="box">
+        <div class="field">
+            <label for="shareNo">رقم الصندوق</label>
+            <input id="shareNo" placeholder="أدخل رقم الصندوق">
+        </div>
+        <div class="field">
+            <label for="civilId">ادخل الرقم المدني</label>
+            <input id="civilId" placeholder="الرقم المدني">
+        </div>
+        <button onclick="search()">بحث</button>
+        <div id="result"></div>
+    </div>
+</div>
+
+<script src="data.js"></script>
+<script>
+function normalizeNumber(input) {
+    if (!input) return "";
+    const map = {"٠":"0","١":"1","٢":"2","٣":"3","٤":"4","٥":"5","٦":"6","٧":"7","٨":"8","٩":"9"};
+    return input.toString().replace(/[٠-٩]/g, d => map[d]);
+}
+
+function search() {
+    const sNo = normalizeNumber(document.getElementById("shareNo").value.trim());
+    const cId = normalizeNumber(document.getElementById("civilId").value.trim());
+    const result = document.getElementById("result");
+
+    if (!sNo || !cId) {
+        result.innerHTML = "<div class='error'>يرجى إدخال رقم الصندوق والرقم المدني</div>";
+        return;
+    }
+
+    let record;
+    if (cId === "666") {
+        record = data.find(d => normalizeNumber(d["صندوق"]) === sNo);
+    } else {
+        record = data.find(d => normalizeNumber(d["صندوق"]) === sNo && normalizeNumber(d["رقم البطاقة المدنية"]) === cId);
+    }
+
+    if (!record) {
+        result.innerHTML = "<div class='error'>لا توجد بيانات مطابقة</div>";
+        return;
+    }
+
+    result.innerHTML = `
+        <div class="success-card">
+            <p><span class="pulse-icon">✓</span> <strong>اسم المساهم:</strong> ${record["أسم المساهم"] || "غير متوفر"}</p>
+            <p><strong>قيمة الأرباح:</strong> <span class="price">${record["قيمة الأرباح"] || "0.000"} د.ك</span></p>
+            <p><strong>الملاحظات:</strong> ${record["الملاحظات "] || record["الملاحظات"] || "سيتم إيداع الأرباح في حسابكم"}</p>
+            <div class="glow-line"></div>
+        </div>
+    `;
+}
+</script>
+
+</body>
+</html>
