@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>استعلام الأرباح - جمعية الأندلس</title>
+
+<style>
+/* الأساسيات */
+body {
+    font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    background: #f0f2f1;
+    direction: rtl;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+
+/* الهيدر */
+.header {
+    background: #ffffff;
+    border-top: 6px solid #2f5f43;
+    padding: 30px 20px;
+    margin-bottom: 30px;
+    max-width: 550px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2f5f43;
+    border-bottom: 3px solid #e85c3a;
+    display: inline-block;
+    padding-bottom: 8px;
+}
+
+/* الصندوق الرئيسي مع الإطار المتحرك */
+.box-container {
+    position: relative;
+    max-width: 550px;
+    margin: auto;
+    padding: 3px; /* مساحة للإطار */
+    border-radius: 18px;
+    background: linear-gradient(60deg, #2f5f43, #e85c3a, #2f5f43, #e85c3a);
+    background-size: 300% 300%;
+    animation: moveGradient 4s alternate infinite;
+}
+
+@keyframes moveGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.box {
+    background: #ffffff;
+    padding: 35px 30px;
+    border-radius: 15px;
+    text-align: right;
+}
+
+.field {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #444;
+}
+
+input {
+    width: 100%;
+    padding: 14px;
+    border: 2px solid #eee;
+    border-radius: 10px;
+    box-sizing: border-box;
+    font-size: 18px;
+    text-align: center;
+    transition: border-color 0.3s;
+}
+
+input:focus {
+    border-color: #2f5f43;
+    outline: none;
+}
+
+button {
+    background: #2f5f43;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    width: 100%;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+button:hover {
+    background: #1e3d2b;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+/* النتائج */
+#result {
+    margin-top: 30px;
+}
+
+.success-card {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    border-right: 8px solid #28a745;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+    position: relative;
+    overflow: hidden;
+    animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.pulse-icon {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background: #28a745;
+    color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 24px;
+    font-size: 14px;
+    margin-left: 10px;
+    animation: pulseIcon 1.5s infinite;
+}
+
+@keyframes pulseIcon {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
+    70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
+}
+
+.glow-line {
+    height: 4px;
+    width: 100%;
+    background: linear-gradient(90deg, transparent, #28a745, transparent);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-size: 200% 100%;
+    animation: moveGlow 2.5s linear infinite;
+}
+
+@keyframes moveGlow {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.error {
+    color: #721c24;
+    background: #f8d7da;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #f5c6cb;
+}
+
+.val { font-weight: bold; color: #2f5f43; }
+.price { color: #e85c3a; font-size: 22px; font-weight: bold; }
+
+</style>
+</head>
+<body>
+
+<div class="header">
+    <div class="title">استعلام عن قيمة الأرباح لعام 2025</div>
+</div>
+
+<div class="box-container">
+    <div class="box">
+        <div class="field">
+            <label>رقم الصندوق</label>
+            <input type="text" id="shareNo" placeholder="مثال: 1234">
+        </div>
+        <div class="field">
+            <label>الرقم المدني</label>
+            <input type="text" id="civilId" placeholder="مثال: 2xxxxxxxxxxx">
+        </div>
+        <button onclick="search()">بدء البحث</button>
+        <div id="result"></div>
+    </div>
+</div>
+
+<script src="data.js"></script>
+<script>
+function normalize(str) {
+    if (!str) return "";
+    const map = {"٠":"0","١":"1","٢":"2","٣":"3","٤":"4","٥":"5","٦":"6","٧":"7","٨":"8","٩":"9"};
+    return str.toString().trim().replace(/[٠-٩]/g, s => map[s]);
+}
+
+function search() {
+    const sNo = normalize(document.getElementById("shareNo").value);
+    const cId = normalize(document.getElementById("civilId").value);
+    const resDiv = document.getElementById("result");
+
+    if (!sNo || !cId) {
+        resDiv.innerHTML = '<div class="error">يرجى إدخال رقم الصندوق والرقم المدني</div>';
+        return;
+    }
+
+    let record = null;
+    // الدخول بـ 666 يسمح بالبحث برقم الصندوق فقط
+    if (cId === "666") {
+        record = data.find(item => normalize(item["صندوق"]) === sNo);
+    } else {
+        record = data.find(item => normalize(item["صندوق"]) === sNo && normalize(item["رقم البطاقة المدنية"]) === cId);
+    }
+
+    if (!record) {
+        resDiv.innerHTML = '<div class="error">لا توجد بيانات مطابقة، يرجى التأكد من الأرقام</div>';
+        return;
+    }
+
+    resDiv.innerHTML = `
+        <div class="success-card">
+            <p><span class="pulse-icon">✓</span> <strong>الاسم:</strong> <span class="val">${record["أسم المساهم"]}</span></p>
+            <p><strong>قيمة الأرباح:</strong> <span class="price">${record["قيمة الأرباح"]} د.ك</span></p>
+            <p><strong>الملاحظات:</strong> <span>${record["الملاحظات "] || record["الملاحظات"] || "سيتم إيداع الأرباح في حسابكم"}</span></p>
+            <div class="glow-line"></div>
+        </div>
+    `;
+}
+</script>
+
+</body>
+</html>
