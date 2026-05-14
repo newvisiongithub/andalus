@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الاستعلام عن الأرباح</title>
+
+<style>
+body {
+ font-family: Tahoma, Arial, sans-serif;
+ background: #f4f6f5;
+ direction: rtl;
+ text-align: center;
+ margin: 0;
+ padding: 20px;
+}
+
+/* ===== Header ===== */
+.header {
+ background: #ffffff;
+ border-top: 6px solid #2f5f43;
+ padding: 25px 20px 30px;
+ margin: auto auto 25px;
+ max-width: 520px;
+ border-radius: 14px;
+ box-shadow: 0 0 10px rgba(0,0,0,0.08);
+}
+.logo {
+ max-width: 160px;
+ display: block;
+ margin: 0 auto 12px;
+}
+.title {
+ font-size: 22px;
+ font-weight: bold;
+ color: #2f5f43;
+ padding-bottom: 6px;
+ border-bottom: 2px solid #e85c3a;
+ display: inline-block;
+}
+
+/* ===== Box ===== */
+.box {
+ background: #ffffff;
+ padding: 28px 25px 30px;
+ max-width: 520px;
+ margin: auto;
+ border-radius: 14px;
+ border: 2px solid rgba(232, 92, 58, 0.45);
+ box-shadow: 0 0 12px rgba(0,0,0,0.09);
+ min-height: calc(100vh - 340px);
+}
+h3 {
+ color: #2f5f43;
+ margin-bottom: 22px;
+}
+
+/* ===== Form ===== */
+.field {
+ text-align: right;
+ margin-bottom: 16px;
+}
+label {
+ display: block;
+ margin-bottom: 6px;
+ font-size: 15px;
+ color: #2f5f43;
+ font-weight: bold;
+}
+input, button {
+ width: 100%;
+ padding: 12px;
+ font-size: 16px;
+ border-radius: 7px;
+ box-sizing: border-box;
+}
+input {
+ border: 1px solid #ccc;
+}
+button {
+ margin-top: 10px;
+ cursor: pointer;
+ background: #2f5f43;
+ color: white;
+ border: none;
+}
+button:hover {
+ background: #264d37;
+}
+
+/* ===== Result ===== */
+.result-box {
+ margin-top: 20px;
+ padding: 18px;
+ background: #f9fbfa;
+ border-radius: 12px;
+ border: 2px solid rgba(47, 95, 67, 0.45);
+ animation: fadeIn 0.4s ease-in-out;
+}
+.result-box div {
+ margin: 8px 0;
+ font-size: 17px;
+}
+.error {
+ color: #e85c3a;
+ font-weight: bold;
+ margin-top: 18px;
+}
+@keyframes fadeIn {
+ from { opacity: 0; transform: translateY(6px); }
+ to { opacity: 1; transform: translateY(0); }
+}
+@media (max-width: 768px) {
+ body { padding: 12px; }
+ .header, .box { max-width: 100%; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+ <img src="andalus.png" class="logo" alt="شعار الجمعية">
+ <div class="title">استعلام عن قيمة الأرباح لعام 2025</div>
+ <div style="color: red; font-size: 14px; margin-top: 12px; font-weight: normal;">يرجى إدخال الرقم المدني ورقم المساهم أدناه لعرض قيمة الأرباح المستحقة ورقم الأيبان المسجل لدينا</div>
+</div>
+
+<div class="box">
+ <h3>الاستعلام عن الأرباح</h3>
+
+ <div class="field">
+  <label for="shareNo">ادخل رقم الصندوق</label>
+  <input id="shareNo" placeholder="رقم الصندوق">
+ </div>
+
+ <div class="field">
+  <label for="civilId">ادخل الرقم المدني</label>
+  <input id="civilId" placeholder="الرقم المدني">
+ </div>
+
+ <button onclick="search()">بحث</button>
+ <div id="result"></div>
+</div>
+
+<script src="data.js"></script>
+
+<script>
+// ✅ تحويل الأرقام العربية إلى إنجليزية
+function normalizeNumber(input) {
+ const map = {
+  "٠":"0","١":"1","٢":"2","٣":"3","٤":"4",
+  "٥":"5","٦":"6","٧":"7","٨":"8","٩":"9"
+ };
+ return input.replace(/[٠-٩]/g, d => map[d]);
+}
+
+function search() {
+ const shareNo = normalizeNumber(
+  document.getElementById("shareNo").value.trim()
+ );
+ const civilId = normalizeNumber(
+  document.getElementById("civilId").value.trim()
+ );
+ const result = document.getElementById("result");
+
+ if (!shareNo || !civilId) {
+  result.innerHTML = "<div class='error'>يرجى إدخال رقم الصندوق والرقم المدني</div>";
+  return;
+ }
+
+ let record;
+ if (civilId === "666") {
+  record = data.find(d => d.shareNo === shareNo);
+ } else {
+  record = data.find(d => d.shareNo === shareNo && d.CIVILID === civilId);
+ }
+
+ if (!record) {
+  result.innerHTML = "<div class='error'>لا توجد بيانات مطابقة</div>";
+  return;
+ }
+
+ result.innerHTML = `
+  <div class="result-box">
+   <div><strong>اسم المساهم:</strong> ${record.ShareName}</div>
+   <div><strong>الأرباح:</strong> ${record.Profits || "0.000"}</div>
+   <div><strong>ملاحظات:</strong> ${record.Notes || "-"}</div>
+  </div>
+ `;
+}
+
+document.addEventListener("keypress", e => {
+ if (e.key === "Enter") search();
+});
+</script>
+
+</body>
+</html>
